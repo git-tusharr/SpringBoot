@@ -1,0 +1,19 @@
+package com.example.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import com.example.model.Student;
+import com.example.service.StudentService;
+
+@RestController
+@RequestMapping("/api")
+public class StudentController {
+
+    @Autowired
+    StudentService studentService;
+
+    @PostMapping("/save")
+    public Student save(@RequestBody Student s) {
+        return studentService.save(s);
+    }
+}
