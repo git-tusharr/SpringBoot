@@ -3,6 +3,8 @@ package com.example.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.model.Student;
@@ -17,17 +19,18 @@ public class StudentService {
     public Student save(Student s) {
         return studentRepository.save(s);
     }
-    
+
     public List<Student> getdata() {
-    	
-    	return studentRepository.findAll();
-		
-	}
-    
-    
+        return studentRepository.findAll();
+    }
+
     public String delete(Integer id) {
-    	studentRepository.deleteById(id);
-    	return "deleted succesfully";
-		
-	}
+        studentRepository.deleteById(id);
+        return "deleted successfully";
+    }
+
+    public List<Student> pagi(int pg, int size) {
+        Page<Student> page = studentRepository.findAll(PageRequest.of(pg, size));
+        return page.getContent();
+    }
 }

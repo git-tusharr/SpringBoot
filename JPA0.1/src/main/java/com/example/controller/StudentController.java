@@ -30,4 +30,15 @@ public class StudentController {
     public String del(@PathVariable Integer id) {
     	return studentService.delete(id);
     }
+    
+    
+    
+    @GetMapping("/pagi")
+    public List<Student> pagi(
+            @RequestParam int pg,
+            @RequestParam int size) {
+        return studentService.pagi(pg, size);
+    }
+    
+    
 }
