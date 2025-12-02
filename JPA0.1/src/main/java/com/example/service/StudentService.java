@@ -1,5 +1,7 @@
 package com.example.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,4 +17,17 @@ public class StudentService {
     public Student save(Student s) {
         return studentRepository.save(s);
     }
+    
+    public List<Student> getdata() {
+    	
+    	return studentRepository.findAll();
+		
+	}
+    
+    
+    public String delete(Integer id) {
+    	studentRepository.deleteById(id);
+    	return "deleted succesfully";
+		
+	}
 }
