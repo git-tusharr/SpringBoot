@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.model.Student;
@@ -33,4 +34,13 @@ public class StudentService {
         Page<Student> page = studentRepository.findAll(PageRequest.of(pg, size));
         return page.getContent();
     }
+    
+    
+    public List<Student> sortbyfield(String field,String direction) {
+    	
+    	Sort sort=direction.equals("asc")?
+    			Sort.by(field).ascending():Sort.by(field).descending();
+    	return studentRepository.findAll(sort);
+		
+	}
 }
