@@ -41,4 +41,9 @@ public class StudentController {
             @RequestParam String direction) {
         return studentService.sortbyfield(field, direction);
     }
+    
+    @PostMapping("/filter")
+    public List<Student> name(@RequestParam String cls) {
+    	return studentService.filter(cls);
+    }
 }

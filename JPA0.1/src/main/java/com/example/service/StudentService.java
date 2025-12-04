@@ -43,4 +43,8 @@ public class StudentService {
     	return studentRepository.findAll(sort);
 		
 	}
+    
+    public List<Student> filter(String cls) {
+		return studentRepository.findByCls(cls);
+	}
 }
