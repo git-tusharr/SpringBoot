@@ -12,7 +12,9 @@ public class ModelService {
     @Autowired
     Repository repository;
 
+    // Save a new model
     public Model save(Model s) {
         return repository.save(s);
     }  
+
 }
