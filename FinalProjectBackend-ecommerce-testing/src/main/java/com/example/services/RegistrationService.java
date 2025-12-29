@@ -61,17 +61,18 @@ public class RegistrationService {
         String formattedPhone =
                 user.getPhone().startsWith("+") ? user.getPhone() : "+91" + user.getPhone();
 
-        // 🔧 FIX: use formattedPhone consistently
         redisTemplate.opsForValue()
                 .set("phone_otp:" + formattedPhone, phoneOtp, 15, TimeUnit.MINUTES);
 
         redisTemplate.opsForValue()
                 .set("email_otp:" + user.getEmail(), emailOtp, 15, TimeUnit.MINUTES);
 
+        // ✅ ONLY CHANGE: added 4th parameter (emailOtp)
         emailService.sendEmail(
                 user.getEmail(),
                 "Verify your email OTP",
-                "Your OTP:" + emailOtp
+                "Your OTP is:",
+                emailOtp
         );
 
         phoneService.sendOtp(formattedPhone, phoneOtp);
@@ -87,8 +88,9 @@ public class RegistrationService {
 
             User user = userRepository.findByEmail(email).orElseThrow();
             user.setEmailVerified(true);
-            activateIfReady(user);
-            userRepository.save(user);
+            activateIfReady(user); // sets status to ACTIVE if both verified
+            userRepository.saveAndFlush(user); // force DB update
+
 
             return true;
         }
@@ -105,9 +107,10 @@ public class RegistrationService {
             redisTemplate.delete(key);
 
             User user = userRepository.findByPhone(formattedPhone).orElseThrow();
-            user.setPhonelVerified(true);
+            user.setPhoneVerified(true);
             activateIfReady(user);
-            userRepository.save(user);
+            userRepository.saveAndFlush(user);
+
 
             return true;
         }
@@ -115,7 +118,7 @@ public class RegistrationService {
     }
 
     private void activateIfReady(User user) {
-        if (user.isEmailVerified() && user.isPhonelVerified()) {
+        if (user.isEmailVerified() && user.isPhoneVerified()) {
             user.setStatus("ACTIVE");
         }
     }

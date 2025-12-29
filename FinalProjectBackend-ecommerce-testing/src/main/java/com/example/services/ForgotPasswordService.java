@@ -40,14 +40,17 @@ public class ForgotPasswordService {
         redisTemplate.opsForValue()
                 .set(redisKey, user.getEmail(), 15, TimeUnit.MINUTES);
 
-        String resetLink = "http://localhost:3000/reset-password?token=" + token;
+        String resetLink = "http://localhost:5173/reset-password?token=" + token;
+
 
         emailService.sendEmail(
                 user.getEmail(),
                 "Reset Your Password",
                 "Click the link below to reset your password:\n" + resetLink +
-                "\n\nThis link is valid for 15 minutes."
+                "\n\nThis link is valid for 15 minutes.",
+                null
         );
+
     }
 
     public void validateToken(String token) {
