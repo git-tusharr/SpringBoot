@@ -1,11 +1,13 @@
 package com.example.util;
 
 import com.twilio.Twilio;
+import com.twilio.http.TwilioRestClient;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+
 
 @Configuration
 public class PhoneService {
@@ -29,7 +31,7 @@ public class PhoneService {
                 "Your OTP is: " + otp
         ).create();
 
-        // ✅ UPDATED LOG
-        System.out.println("OTP sent successfully to " + toPhone + " | OTP = " + otp);
+        System.out.println("OTP sent successfully to " + toPhone);
     }
+   
 }

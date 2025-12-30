@@ -33,7 +33,7 @@ public class User {
     
     
     private boolean emailVerified=false;
-    private boolean phoneVerified=false;
+    private boolean phonelVerified=false;
     
     
     private String status="PENDING";
